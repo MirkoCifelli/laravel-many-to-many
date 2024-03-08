@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('page-title', $technologies->title . 'Edit')
+@section('page-title', $technology->title . 'Edit')
 
 @section('main-content')
     <h1 class="text-center">
@@ -26,7 +26,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('admin.technologye.show', ['technology' => $technologye->id]) }}" method="POST">
+                <form action="{{ route('admin.technologies.show', ['technology' => $technology->id]) }}" method="POST">
 
                     @csrf
 

@@ -46,7 +46,7 @@ class TechnologyController extends Controller
             'slug' => $slug,
         ]);
 
-        return redirect()->route('admin.technologies.show', ['technologie' => $technology->id]);
+        return redirect()->route('admin.technologies.show', ['technology' => $technology->id]);
     }
 
     /**
@@ -61,15 +61,16 @@ class TechnologyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Technology $technology)
+    public function edit(string $slug)
     {
+        $technology = Technology::where('slug', $slug)->firstOrFail();
         return view('admin.technologies.edit', compact('technology'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTechnologyRequest $request, Technology $technology)
+    public function update(UpdateTechnologyRequest $request, Technology $slug)
     {
         $technologiesData = $request->validate([
             'title'=> 'required|string|'
@@ -82,14 +83,15 @@ class TechnologyController extends Controller
             'slug' => $slug,
         ]);
 
-        return redirect()->route('admin.technologies.show', ['technology' => $technology->id]);
+        return redirect()->route('admin.technologies.show', ['technology' => $technology->slug]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Technology $technology)
+    public function destroy(string $slug)
     {
+        $technology = Technology::where('slug', $slug)->firstOrFail();
         $technology-> delete();
         return redirect()->route('admin.technologies.index');
     }

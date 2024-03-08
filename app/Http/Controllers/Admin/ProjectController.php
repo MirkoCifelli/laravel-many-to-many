@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 //Models
 use App\Models\Project;
 use App\Models\Type;
+use App\Models\Technology;
 
 // Helpers
 use Illuminate\Support\Str;
@@ -33,8 +34,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        $technologies = Technology::all();
         $types = Type::all();
-        return view("admin.projects.create",compact('types'));
+        return view("admin.projects.create",compact('types','technologies'));
         
     }
 
@@ -58,6 +60,13 @@ class ProjectController extends Controller
             'type_id'=>$validationData['type_id'],
         ]);
 
+        if (isset($validationData['technologies'])) {
+            foreach ($validationData['technologies'] as $singleTagId) {
+               
+                $project->technologies()->attach($singleTagId);
+            }
+        }
+
         return redirect()->route('admin.projects.show', ['project' => $project->slug]);
     }
 
@@ -75,9 +84,10 @@ class ProjectController extends Controller
      */
     public function edit(string $slug)
     {
+        $technologies = Technology::all();
         $types = Type::all();
         $project = Project::where('slug', $slug)->firstOrFail();
-        return view('admin.projects.edit', compact('project','types'));
+        return view('admin.projects.edit', compact('project','types','technologies'));
     }
 
     /**
@@ -93,7 +103,13 @@ class ProjectController extends Controller
         
         
         $project->updateOrFail($validationData);
-        
+
+        if (isset($validationData['technologies'])) {
+            $project->technologies()->sync($validationData['technologies']);
+        }
+        else {
+            $project->technologies()->detach();
+        }
 
         
         // $project->update($validationData);
