@@ -23,11 +23,24 @@
                     @if ($project->type != null)
                         <h2>
                             Categoria:
-                            <a href="{{ route('admin.types.show', ['type' => $project->type->id]) }}">
+                            <a href="{{ route('admin.types.show', ['type' => $project->type->slug]) }}">
                                 {{ $project->type->title }}
                             </a>
                         </h2>
                     @endif
+
+                    <div>
+                        Tag:
+                        @forelse ($project->technologies as $technology)
+                            <a href="{{ route('admin.technologies.show', ['technology' => $technology->slug]) }}"
+                                class="badge rounded-pill text-bg-primary">
+                                {{ $technology->title }}
+                            </a>
+                        @empty
+                            -
+                        @endforelse
+                    </div>
+
                 </div>
             </div>
         </div>
