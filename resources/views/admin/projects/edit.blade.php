@@ -70,19 +70,37 @@
                     <div class="mb-3">
                         <label for="type_id" class="form-label">Type</label>
                         <select name="type_id" id="type_id" class="form-select">
-                            <option
-                                value=""
-                                {{ old('type_id') == null ? 'selected' : '' }}>
+                            <option value="" {{ old('type_id') == null ? 'selected' : '' }}>
                                 Seleziona un type...
                             </option>
                             @foreach ($types as $type)
-                                <option
-                                {{ old('type_id', $type->type_id) == $type->id ? 'selected' : '' }}
-                                value="{{ $type->id }}">
-                                {{ $type->title }}
+                                <option {{ old('type_id', $type->type_id) == $type->id ? 'selected' : '' }}
+                                    value="{{ $type->id }}">
+                                    {{ $type->title }}
                                 </option>
                             @endforeach
                         </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Tag</label>
+
+                        <div>
+                            @foreach ($technologies as $technology)
+                                <div class="form-check form-check-inline">
+                                    <input {{-- Se c'è l'old, vuol dire che c'è stato un errore --}}
+                                        @if ($errors->any()) {{-- Faccio le verifiche sull'old --}}
+                                            {{ in_array($technology->id, old('technologies', [])) ? 'checked' : '' }}
+                                        @else
+                                            {{-- Faccio le verifiche sulla collezione --}}
+                                            {{ $project->technologies->contains($technology->id) ? 'checked' : '' }} @endif
+                                        class="form-check-input" type="checkbox" id="technology-{{ $technology->id }}"
+                                        name="technologies[]" value="{{ $technology->id }}">
+                                    <label class="form-check-label"
+                                        for="technology-{{ $technology->id }}">{{ $technology->title }}</label>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
 
                     <div>
