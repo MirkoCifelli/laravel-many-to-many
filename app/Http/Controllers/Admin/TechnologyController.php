@@ -46,14 +46,15 @@ class TechnologyController extends Controller
             'slug' => $slug,
         ]);
 
-        return redirect()->route('admin.technologies.show', ['technology' => $technology->id]);
+        return redirect()->route('admin.technologies.show', ['technologie' => $technology->id]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Technology $technology)
+    public function show(string $slug)
     {
+        $technology = Technology::where('slug', $slug)->firstOrFail();
         return view('admin.technologies.show', compact('technology'));
     }
 

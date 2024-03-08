@@ -35,7 +35,7 @@ class TechnologySeeder extends Seeder
         ];
 
         foreach ($allTechnology as $singleTechnology) {
-            $technologies = Technology::create([
+            $technology = Technology::create([
                 'title' => $singleTechnology,
                 'slug' => str()->slug($singleTechnology),
             ]);

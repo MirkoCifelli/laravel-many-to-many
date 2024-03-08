@@ -14,4 +14,17 @@ class Technology extends Model
         'title',
         'slug'
     ];
+
+
+    /*
+        Relationships
+    */
+
+
+    public function types()
+    {
+        return $this-> belongsToMany(Type::class);
+    }
+
 }
+
