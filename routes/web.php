@@ -7,6 +7,8 @@ use App\Http\Controllers\MainController;
 use App\Http\Controllers\Admin\MainController as AdminMainController;
 use App\Http\Controllers\Admin\ProjectController as AdminProjectContoller;
 use App\Http\Controllers\Admin\TypeController as AdminTypeContoller;
+use App\Http\Controllers\Admin\TechnologyController as AdminTechnologyContoller;
+
 
 
 /*
@@ -30,6 +32,7 @@ Route::prefix('admin')
     Route::get('/dashboard', [AdminMainController::class, 'dashboard'])->name('dashboard');
     Route::resource('projects',AdminProjectContoller::class);
     Route::resource('types',AdminTypeContoller::class);
+    Route::resource('technologies',AdminTechnologyContoller::class);
 
 });
 
