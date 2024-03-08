@@ -27,7 +27,7 @@
                             <a class="nav-link" href="{{ route('admin.dashboard') }}">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin.projects.index') }}">Post</a>
+                            <a class="nav-link" href="{{ route('admin.projects.index') }}">Project</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('admin.types.index') }}">Type</a>

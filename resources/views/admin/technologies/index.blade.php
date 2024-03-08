@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-body">
                     <h1 class="text-center text-success">
-                        Tutti le Technologie
+                        Tutte le Technologie
                     </h1>
 
                     <div class="mb-4">

@@ -23,7 +23,7 @@
                     </h2>
 
                     <ul>
-                        @foreach ($technologie->projects as $project)
+                        @foreach ($technology->projects as $project)
                             <li>
                                 <a href="{{ route('admin.projects.show', ['project' => $project->slug]) }}">
                                     {{ $project->title }}
