@@ -12,6 +12,7 @@ use App\Models\Technology;
 
 // Helpers
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 //Form Request
 use App\Http\Requests\StoreProjectRequest;
@@ -48,6 +49,11 @@ class ProjectController extends Controller
         
         $validationData=$request->validated();
 
+        $coverImgPath = null;
+        if (isset($validationData['cover_img'])) {
+            $coverImgPath = Storage::disk('public')->put('images', $validationData['cover_img']);
+        }
+
         $slug = Str::slug($validationData['title']);
       
        
@@ -58,6 +64,7 @@ class ProjectController extends Controller
             'slug' => $slug,
             'content'=> $validationData['content'],
             'type_id'=>$validationData['type_id'],
+            'cover_img' => $coverImgPath,
         ]);
 
         if (isset($validationData['technologies'])) {
@@ -97,7 +104,24 @@ class ProjectController extends Controller
     {
         $validationData=$request->validated();
 
+        
+
         $project = Project::where('slug', $slug)->firstOrFail();
+
+        $coverImgPath = $project->cover_img;
+        if (isset($validationData['cover_img'])) {
+            if ($project->cover_img != null) {
+                Storage::disk('public')->delete($project->cover_img);
+            }
+
+            $coverImgPath = Storage::disk('public')->put('images', $validationData['cover_img']);
+        }
+        else if (isset($validationData['delete_cover_img'])) {
+            Storage::disk('public')->delete($project->cover_img);
+
+            $coverImgPath = null;
+        }
+        
         $slug = Str::slug($validationData['title']);
         $validationData['slug'] = $slug;
         
@@ -122,6 +146,11 @@ class ProjectController extends Controller
     public function destroy(string $slug)
     {
         $project = Project::where('slug', $slug)->firstOrFail();
+
+        if ($project->cover_img != null) {
+            Storage::disk('public')->delete($project->cover_img);
+        }
+
         $project->delete();
 
         return redirect()->route('admin.projects.index');

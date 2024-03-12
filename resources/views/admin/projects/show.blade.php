@@ -29,6 +29,12 @@
                         </h2>
                     @endif
 
+                    @if ($project->cover_img != null)
+                        <div class="my-3">
+                            <img src="{{ asset('storage/'.$project->cover_img) }}" style="max-width: 400px;">
+                        </div>
+                    @endif
+
                     <div>
                         Tag:
                         @forelse ($project->technologies as $technology)
