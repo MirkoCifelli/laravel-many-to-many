@@ -38,7 +38,7 @@
 
 
 
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label for="slug" class="form-label">Slug<span class="text-danger">*</span></label>
                         <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug"
                             placeholder="Inserisci Slug..." maxlength="255" value="{{ old('slug') }}">
@@ -47,7 +47,7 @@
                                 {{ $message }}
                             </div>
                         @enderror
-                    </div>
+                    </div> --}}
 
                     <div class="mb-3">
                         <label for="cover_img" class="form-label">Cover image</label>
